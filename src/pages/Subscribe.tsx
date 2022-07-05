@@ -1,7 +1,9 @@
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { Logo } from "../components/Logo";
 import { useCreateSubscriberMutation } from "../graphql/generated";
+
  
 export function Subscribe() {
   const navigate = useNavigate()
@@ -10,6 +12,14 @@ export function Subscribe() {
   const [email, setEmail] = useState('');
 
   const [createSubscriber, { loading }] = useCreateSubscriberMutation()
+
+  function SubscribeWithSuccess() {  
+    Swal.fire({  
+      title: 'Vamos lá',  
+      text: 'inscrição bem sucedida',  
+      icon: 'success',  
+    });  
+  }  
 
   async function handleSubscribe(event: FormEvent) {
     event.preventDefault();
@@ -22,6 +32,7 @@ export function Subscribe() {
     })
 
     navigate('/event')
+    SubscribeWithSuccess()    
   }
 
   return (
@@ -65,7 +76,6 @@ export function Subscribe() {
           </form>
         </div>
       </div>
-
       <img src="/src/assets/code-mockup.png" className="mt-10" alt="" />
     </div>
   );
